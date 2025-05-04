@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>花語小遊戲</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/quiz.js"></script>
+</head>
+<body>
+
+      <!-- Modal 彈出視窗 -->
+<div id="flowerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modalImage" src="" alt="" />
+      <h2 id="modalTitle"></h2>
+      <p><strong>花語：</strong><span id="modalMeaning"></span></p>
+      <p id="modalDescription"></p>
+    </div>
+  </div>
+  
+      
+  <header>
+    <h1>花語小遊戲 🌼</h1>
+    <a href="index.html">← 回首頁</a>
+  </header>
+
+  <section class="quiz-section">
+    <div id="questionArea"></div>
+    <div id="optionsArea"></div>
+    <p id="feedback"></p>
+    <button id="nextBtn" style="display:none;">下一題</button>
+  </section>
+  
+</body>
+</html>

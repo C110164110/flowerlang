@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>花卉百科 - 生日推薦</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>花卉百科 - 生日推薦</h1>
+      <p>輸入你的生日，看看當月的誕生花是什麼！</p>
+    </header>
+
+    <section id="birthdaySection">
+      <h2>選擇你的生日</h2>
+      <input type="date" id="birthdayInput" />
+      <button onclick="showBirthdayFlower()">查看你的誕生花</button>
+    </section>
+
+    <section id="flowerInfo" style="margin-top: 30px;">
+      <img id="flowerImage" src="" alt="" style="max-width: 300px; display: none;" />
+      <h3 id="flowerName"></h3>
+      <p id="flowerDesc"></p>
+      <button onclick="copyShareLink()" style="margin-top: 10px;">📤 分享我的誕生花</button>
+    </section>
+
+    <script src="js/birthday.js"></script>
+  </div>
+</body>
+</html>
