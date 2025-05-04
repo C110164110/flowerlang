@@ -1,47 +1,70 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const themeToggleButton = document.getElementById("themeToggle");
-  const searchInput = document.getElementById("searchInput");
-  const flowerGallery = document.getElementById("flowerGallery");
+// 切換主題
+const themeToggleBtn = document.getElementById("themeToggle");
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+});
 
-  // 預設花語資料
-  const flowers = [
-    { name: "玫瑰", meaning: "愛與美", image: "images/rose.jpg" },
-    { name: "向日葵", meaning: "崇拜、忠誠", image: "images/sunflower.jpg" },
-    { name: "百合", meaning: "純潔、高雅", image: "images/lily.jpg" },
-    { name: "櫻花", meaning: "希望、短暫之美", image: "images/cherry_blossom.jpg" },
-  ];
+// 載入儲存的主題設定
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-theme");
+}
 
-  // 顯示所有花語卡片
-  function displayFlowers(flowers) {
-    flowerGallery.innerHTML = ""; // 清空現有的花語卡片
-    flowers.forEach(flower => {
+// 搜尋花語
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const flowerGallery = document.getElementById("flowerGallery");
+
+const flowersData = [
+  { name: "玫瑰", meaning: "愛情與浪漫", image: "images/rose.jpg" },
+  { name: "百合", meaning: "純潔與高貴", image: "images/lily.jpg" },
+  { name: "向日葵", meaning: "正向與希望", image: "images/sunflower.jpg" },
+  // 可以根據需求增加更多花語資料
+];
+
+// 搜尋並顯示花語卡片
+searchBtn.addEventListener("click", () => {
+  const searchQuery = searchInput.value.toLowerCase().trim();
+  if (searchQuery === "") return;
+
+  const filteredFlowers = flowersData.filter(flower => 
+    flower.name.toLowerCase().includes(searchQuery) || 
+    flower.meaning.toLowerCase().includes(searchQuery)
+  );
+
+  flowerGallery.innerHTML = ''; // 清空目前顯示的結果
+
+  if (filteredFlowers.length === 0) {
+    flowerGallery.innerHTML = `<p>找不到符合的結果，請再試一次！</p>`;
+  } else {
+    filteredFlowers.forEach(flower => {
       const card = document.createElement("div");
-      card.classList.add("flower-card");
+      card.classList.add("card");
 
       card.innerHTML = `
-        <img src="${flower.image}" alt="${flower.name}" style="width: 100%; height: auto; border-radius: 5px;" />
+        <img src="${flower.image}" alt="${flower.name}" />
         <h3>${flower.name}</h3>
         <p>${flower.meaning}</p>
+        <button onclick="toggleFavorite('${flower.name}')">收藏</button>
       `;
-
+      
       flowerGallery.appendChild(card);
     });
   }
-
-  // 根據搜尋文字過濾花語
-  searchInput.addEventListener("input", (event) => {
-    const searchQuery = event.target.value.toLowerCase();
-    const filteredFlowers = flowers.filter(flower =>
-      flower.name.toLowerCase().includes(searchQuery) || flower.meaning.toLowerCase().includes(searchQuery)
-    );
-    displayFlowers(filteredFlowers);
-  });
-
-  // 主題切換功能
-  themeToggleButton.addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-  });
-
-  // 預設顯示所有花語
-  displayFlowers(flowers);
 });
+
+
+// 收藏功能 (使用 localStorage)
+function toggleFavorite(flowerName) {
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const flowerIndex = favorites.indexOf(flowerName);
+
+  if (flowerIndex > -1) {
+    favorites.splice(flowerIndex, 1); // 移除已收藏的花
+  } else {
+    favorites.push(flowerName); // 添加到收藏
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  alert(`${flowerName} 已經 ${flowerIndex > -1 ? "移除" : "添加"}到收藏夾`);
+}
