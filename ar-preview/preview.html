@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>花卉 AR 預覽</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .preview-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+    img {
+      max-width: 300px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+    .flower-name {
+      font-size: 1.8em;
+      margin: 15px 0 5px;
+    }
+    .flower-lang {
+      font-size: 1.2em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container preview-container">
+    <h1>🌺 花卉 AR 預覽</h1>
+    <div id="flowerPreview">
+      <!-- 資料將由 JS 插入 -->
+    </div>
+    <button onclick="goBack()">⬅ 返回上一頁</button>
+  </div>
+
+  <script>
+    // 取得網址參數中的花卉資訊
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const lang = params.get('lang');
+    const image = params.get('image');
+
+    const previewDiv = document.getElementById("flowerPreview");
+
+    if (name && lang && image) {
+      previewDiv.innerHTML = `
+        <img src="${decodeURIComponent(image)}" alt="${name}">
+        <div class="flower-name">${decodeURIComponent(name)}</div>
+        <div class="flower-lang">${decodeURIComponent(lang)}</div>
+      `;
+    } else {
+      previewDiv.innerHTML = `<p>未提供花卉資料。</p>`;
+    }
+
+    function goBack() {
+      history.back();
+    }
+  </script>
+</body>
+</html>
